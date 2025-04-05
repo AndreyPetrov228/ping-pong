@@ -19,14 +19,25 @@ class GameSprite(pygame.sprite.Sprite):
         self.rect.x = player_x
         self.rect.y = player_y
 
+    def reset(self):
+        window.blit(self.image, (self.rect.x, self.rect.y))
 
 class Player(GameSprite):
     def update(self):
         global lost
-        keys = key.get_pressed()
-        if keys[K_a] and self.rect.x > 5:
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_a] and self.rect.x > 5:
             self.rect.x -= self.speed
-        if keys[K_d] and self.rect.x < W - 85:
+        if keys[pygame.K_d] and self.rect.x < W - 85:
+            self.rect.x += self.speed
+
+class Player(GameSprite):
+    def update(self):
+        global lost
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_a] and self.rect.x > 5:
+            self.rect.x -= self.speed
+        if keys[pygame.K_d] and self.rect.x < W - 85:
             self.rect.x += self.speed
 
 class Ball(GameSprite):
@@ -35,18 +46,37 @@ class Ball(GameSprite):
         if self.rect.y < 0:
             pass
 
-player = Player('левая ракетка.jpg', 0, 350, 100, 210, 5)
+racket1 = Player('racket.png', 10, H // 2, 25, 100, 10)
+racket2 = Player('racket.png', W - 35, H // 2, 25, 100, 10)
+ball = GameSprite('ball.png', W // 2, H // 2, 50, 50, 0)
+
+#музыка
+
+mixer.init()
+mixer.music.load('MUSIC.ogg')
+mixer.music.play()
+mixer.music.set_volume(0.5)
+
+speed_x = 5
+speed_y = 5
 
 game = True
 finish = False
 while game:
-    for e in event.get():
-        if e.type == QUIT:
+    for e in pygame.event.get():
+        if e.type == pygame.QUIT:
             game = False
 
+    if finish != True:
+        window.fill(background)
+
+    ball.rect.y += speed_y
+    ball.rect.x += speed_x
+
+    #racket1.update_l()
+    #racket2.update_r()
     
-    
-    Player.update()
-    Player.reset()
-    display.update()
-    clock.tick(FPS)
+Player.update()
+Player.reset()
+pygame.display.update()
+clock.tick(FPS)
