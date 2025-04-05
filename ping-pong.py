@@ -52,10 +52,10 @@ ball = GameSprite('ball.png', W // 2, H // 2, 50, 50, 0)
 
 #музыка
 
-mixer.init()
-mixer.music.load('MUSIC.ogg')
-mixer.music.play()
-mixer.music.set_volume(0.5)
+pygame.mixer.init()
+pygame.mixer.music.load('MUSIC.ogg')
+pygame.mixer.music.play()
+pygame.mixer.music.set_volume(0.5)
 
 speed_x = 5
 speed_y = 5
@@ -70,13 +70,13 @@ while game:
     if finish != True:
         window.fill(background)
 
-    ball.rect.y += speed_y
-    ball.rect.x += speed_x
+        ball.rect.y += speed_y
+        ball.rect.x += speed_x
 
-    #racket1.update_l()
-    #racket2.update_r()
+        #racket1.update_l()
+        #racket2.update_r()
     
-Player.update()
-Player.reset()
-pygame.display.update()
-clock.tick(FPS)
+        Player.update()
+        Player.reset()
+        pygame.display.update()
+        clock.tick(FPS)
